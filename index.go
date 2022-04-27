@@ -1,18 +1,21 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
 	"time"
 )
 
 func main() {
 	fmt.Println("Power levels criticially low...")
-	time.Sleep(250 * time.Millisecond)
+	time.Sleep(1000 * time.Millisecond)
 	fmt.Println("Accessing auxiliary power ... please wait")
-	time.Sleep(250 * time.Millisecond)
+	time.Sleep(1000 * time.Millisecond)
 
 	loadingAnimation()
-	getUserInput()
+	userInputDispatch()
 
 }
 
@@ -31,17 +34,27 @@ func loadingAnimation() {
 
 }
 
-func getUserInput() {
+func userInputDispatch() {
+	var userInput string = getUserInput()
 
-	fmt.Println()
-	fmt.Println("Ready for input: ")
-	var userInput string
-	fmt.Scanln(&userInput)
-	fmt.Print("Your input: ")
-	fmt.Print(userInput)
+	scanner := bufio.NewScanner(strings.NewReader(userInput))
+	var text string
+	if scanner.Scan() {
+		text = scanner.Text()
+	}
+	fmt.Printf("Input was: %q\n", text)
 
 }
 
-func help() {
+func getUserInput() string {
+
+	// fmt.Println()
+	// var userInput string
+	// fmt.Scanln(&userInput)
+
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("> ")
+
+	return userInput
 
 }
