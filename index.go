@@ -35,26 +35,57 @@ func loadingAnimation() {
 }
 
 func userInputDispatch() {
-	var userInput string = getUserInput()
+	// var userInput string = getUserInput()
 
-	scanner := bufio.NewScanner(strings.NewReader(userInput))
-	var text string
-	if scanner.Scan() {
-		text = scanner.Text()
+	var exit bool = false
+
+	for exit != true {
+
+		userInput := getUserInput()
+		if userInput[0] == "help" {
+			printHelpMenu()
+			userInput = getUserInput()
+		} else if userInput[0] == "exit" {
+			exit = true
+		}
 	}
-	fmt.Printf("Input was: %q\n", text)
+
+	// scanner := bufio.NewScanner(strings.NewReader(userInput))
+	// scanner.Split(bufio.ScanWords)
+	// for scanner.Scan() {
+	// 	fmt.Println(scanner.Text())
+	// }
 
 }
 
-func getUserInput() string {
+func getUserInput() []string {
 
-	// fmt.Println()
-	// var userInput string
-	// fmt.Scanln(&userInput)
-
+	fmt.Println()
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("> ")
+	userInput, _ := reader.ReadString('\n')
+	userInputArray := strings.Fields(userInput)
+	return userInputArray
 
-	return userInput
+	// fmt.Scanln(&userInput)
+	// nameThing := strings.NewReader(name)
 
+	// fmt.Printf("%q", nameArray[1])
+
+	// reader := bufio.NewReader(os.Stdin)
+	// reader := bufio.NewReader(userInput)
+	// scanner := bufio.NewScanner(strings.NewReader(userInput));
+	// scanner.Split(bufio.ScanWords);
+	// for scanner.Scan() {
+	// 	fmt.Println(scanner.Text())
+	// }
+	// fmt.Print("> ")
+
+	// return userInput
+
+}
+
+func printHelpMenu() {
+	fmt.Println("Commands	-	Description")
+	fmt.Println("archive 	- 	Accesses archives")
 }
